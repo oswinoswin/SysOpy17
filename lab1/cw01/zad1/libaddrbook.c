@@ -317,7 +317,6 @@ int tCompare2(TNODE *node1, TNODE *node2, char *field) {
     if(node1 != NULL && node2 != NULL) {
         if(strcmp(field,"firstName") == 0 ) {
             return strcmp(node1->firstName, node2->firstName);
-
         }
 
         else if(strcmp(field,"lastName") == 0 ) {
@@ -386,6 +385,31 @@ TNODE *tInsert(TNODE *tnode, TNODE *root){
     return root;
 }
 
+TNODE *tInsertWithKey(TNODE *tnode, TNODE *root, char *key){
+    if(tnode != NULL && root != NULL){
+        if(tCompare2(tnode,root,key) < 0){
+            TNODE *curr = tInsertWithKey(tnode, root->left, key);
+            root->left = curr;
+            curr->parent = root;
+        }
+        else {
+            TNODE *curr = tInsertWithKey(tnode, root->right, key);
+            root->right = curr;
+            curr->parent = root;
+        }
+    }
+    else {
+        root = tnode;
+    }
+    return root;
+}
+
+void tAddWithKey(TNODE *tnode, TREE *tree, char *key){
+    if(tnode != NULL && tree != NULL){
+        tree->root = tInsertWithKey(tnode, tree->root, key);
+    }
+}
+
 void tDeletePom(TNODE *tnode){
     if(tnode != NULL){
         tDeletePom(tnode->left);
@@ -398,6 +422,7 @@ void tDeletePom(TNODE *tnode){
 
 void tDeleteTree(TREE *tree){
     tDeletePom(tree->root);
+    free(tree);
 }
 
 
@@ -437,3 +462,60 @@ LIST *treeToListPom(TNODE *tnode, LIST *list){
 LIST *treeToList(TREE *tree, LIST *list){
     treeToListPom(tree->root, list);
 }
+
+
+TREE *tRebuild(TREE *tree, char *key){
+
+
+    LIST *list = createList();
+
+    TREE *tmp = createTree();
+    TNODE *tmp2 = NULL;
+    setTreeKey(key,tree);
+    list = treeToList(tree,list);
+    if(list != NULL) {
+        NODE *node = NULL;
+        if(list->head != NULL) {
+            node = list->head;
+            while(node != NULL) {
+                tmp2 = tcreateNode(node->firstName, node->lastName, node->birthDate, node->email, node->phone);
+                tAddWithKey(tmp2, tmp, key);
+                node = node->next;
+            }
+
+        }
+    }
+    TNODE *troot = tree->root;
+    tree->root = tmp->root;
+    lDeleteList(list);
+    tDeletePom(troot);
+    free(tmp);
+    return tree;
+}
+
+
+void tDeleteNode(TNODE *tnode, TREE *tree){
+    LIST *list = treeToList(tree, createList());
+    TREE *tmp = createTree();
+    lDeleteNode(lFindPerson(tnode->firstName,tnode->lastName, list), list);
+    char *key = tree->key;
+    TNODE *tmp2 = NULL;
+    if(list != NULL) {
+        NODE *node = NULL;
+        if(list->head != NULL) {
+            node = list->head;
+            while(node != NULL) {
+                tmp2 = tcreateNode(node->firstName, node->lastName, node->birthDate, node->email, node->phone);
+                tAddWithKey(tmp2, tmp, key);
+                node = node->next;
+            }
+
+        }
+    }
+    TNODE *troot = tree->root;
+    tree->root = tmp->root;
+    lDeleteList(list);
+    tDeletePom(troot);
+    free(tmp);
+}
+

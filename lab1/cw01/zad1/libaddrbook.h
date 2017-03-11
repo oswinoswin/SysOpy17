@@ -100,4 +100,12 @@ LIST *treeToList(TREE *tree, LIST *list);
 
 LIST *treeToListPom(TNODE *tnode, LIST *list);
 
+TNODE *tInsertWithKey(TNODE *tnode, TNODE *root, char *key);
+
+void tAddWithKey(TNODE *tnode, TREE *tree, char *key);
+
+TREE *tRebuild(TREE *tree, char *key);
+
+void tDeleteNode(TNODE *tnode, TREE *tree);
+
 #endif
