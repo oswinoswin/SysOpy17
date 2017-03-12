@@ -14,6 +14,3 @@ add_executable(Main zad2/main.c)
 add_library(myLib STATIC zad1/libaddrbook.c)
 
 target_link_libraries(Main myLib)
-
-
-

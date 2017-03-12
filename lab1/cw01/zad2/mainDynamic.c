@@ -6,10 +6,32 @@
 #include <sys/time.h>
 #include <sys/resource.h>
 #include <stdint.h>
+#include <dlfcn.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/times.h>
+#include <unistd.h>
+#include <dlfcn.h>
 
 struct timeval uStart, uEnd, sStart, sEnd, rEnd, rStart;
 struct rusage ruStart, ruEnd;
 long double uSum, sSum, rSum;
+
+//dynamic library functions
+static LIST *(*_createList)();
+static void (*_lDeleteList)(LIST*);
+static NODE *(*_createNode)(char*, char*, char*, char*, char*);
+static void (*_lAddFront)(NODE*, LIST*);
+static NODE *(*_lFindPerson)(LIST*, char*, char*);
+static void (*_lPrintPerson)(NODE*);
+static NODE *(*_lFindByIndex)(LIST*, int);
+static void (*_lDeleteNode)(NODE*, LIST*);
+static void (*_lSort)(LIST*, char*);
+
+static void *handle;
+void *dlsymFunction(void *hanlde, const char* symbol);
+void loadDynamicLib();
 
 /* W programie zmierz i wypisz czasy realizacji podstawowych operacji:
 
@@ -54,6 +76,7 @@ void stopTimeAndPrint(){
 
 int main(int argc, char *argv[])
 {
+    loadDynamicLib();
     srand(time(NULL));
     int iter = 1000;
     char firstName[BUFFER_LEN];
@@ -65,7 +88,7 @@ int main(int argc, char *argv[])
     printf("LIST:\n");
     printf("Creating address book:\n");
     startTime();
-    LIST *list = createList();
+    LIST *list = (*_createList)();
     stopTimeAndPrint();
 
 
@@ -80,7 +103,7 @@ int main(int argc, char *argv[])
         sprintf(birthDate, "%d%d%d%d-%d-%d",1,9,rand()%10, rand()%10, rand()%12+1,rand()%31+1);
         sprintf(email,"%d@com.pl",rand());
         sprintf(phone,"%d%d%d-%d%d%d-%d%d%d", rand()%10, rand()%10, rand()%10, rand()%10,rand()%10, rand()%10, rand()%10,rand()%10,rand()%10);
-        lAddFront(createNode(firstName,lastName,birthDate,email,phone),list);
+        (*_lAddFront)((*_createNode)(firstName,lastName,birthDate,email,phone),list);
         stopTime();
         uSum += (( uEnd.tv_sec - uStart.tv_sec)*1000000L + uEnd.tv_usec) - uStart.tv_usec;
         sSum += (( sEnd.tv_sec - sStart.tv_sec)*1000000L + sEnd.tv_usec) - sStart.tv_usec;
@@ -94,34 +117,34 @@ int main(int argc, char *argv[])
 
     printf("Deleting an element: optimistic: \n");
     startTime();
-    lDeleteNode(list->head, list);
+    (*_lDeleteNode)(list->head, list);
     stopTimeAndPrint();
 
 
     printf("Deleting an element: pesymistic: \n");
-    NODE *tmp = createNode("1001", "a", "a","a","a");
+    NODE *tmp = (*_createNode)("1001", "a", "a","a","a");
     startTime();
-    lDeleteNode(tmp, list);
+    (*_lDeleteNode)(tmp, list);
     stopTimeAndPrint();
 
 
     printf("Searching for an element: optimistic:\n");
     startTime();
-    lFindByIndex(0,list);
+    (*_lFindByIndex)(0,list);
     stopTimeAndPrint();
 
     printf("Searching for an element: pesymistic:\n");
     startTime();
-    lFindByIndex(1001,list);
+    (*_lFindByIndex)(1001,list);
     stopTimeAndPrint();
 
     printf("Sort:\n");
     startTime();
-    lSort(list,"lastName");
+    (*_lSort)(list,"lastName");
     stopTimeAndPrint();
 
 //-----------tree-------
-    printf("TREE:\n");
+ /*   printf("TREE:\n");
     printf("Create tree:\n");
     startTime();
     TREE *tree = createTree();
@@ -186,7 +209,42 @@ int main(int argc, char *argv[])
 
 
 
-    tDeleteTree(tree);
-    lDeleteList(list);
+    tDeleteTree(tree);*/
+    (*_lDeleteList)(list);
     return 0;
+}
+
+
+void loadDynamicLib() {
+    //opening and loading dynamic library
+
+    handle = dlopen("libdynamic.so", RTLD_NOW);
+    if(handle == NULL) {
+        fprintf(stderr, "%s\n", dlerror());
+        exit(EXIT_FAILURE);
+    }
+
+    dlerror();
+
+    //loading functions
+    _createList = dlsymFunction(handle, "createList");
+    _lDeleteList = dlsymFunction(handle, "lDeleteList");
+    _createNode = dlsymFunction(handle, "createNode");
+    _lAddFront = dlsymFunction(handle, "lAddFront");
+    _lFindPerson = dlsymFunction(handle, "lFindPerson");
+    _lPrintPerson = dlsymFunction(handle, "lPrintPerson");
+    _lFindByIndex = dlsymFunction(handle, "lFindByIndex");
+    _lDeleteNode = dlsymFunction(handle, "lDeleteNode");
+    _lSort = dlsymFunction(handle, "lSort");
+}
+
+void *dlsymFunction(void *hanlde, const char* symbol) {
+    void *tmp = dlsym(handle, symbol);
+    char *error;
+
+    if((error = dlerror()) != NULL) {
+        fprintf(stderr, "%s\n", dlerror());
+        exit(EXIT_FAILURE);
+    }
+    return tmp;
 }

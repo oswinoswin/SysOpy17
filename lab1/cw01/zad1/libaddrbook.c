@@ -453,14 +453,18 @@ TNODE *tFindPersonPom(char *firstName, char *lastName, TNODE *tnode){
 
 LIST *treeToListPom(TNODE *tnode, LIST *list){
     if(tnode != NULL){
+
+
         treeToListPom(tnode->left, list);
         treeToListPom(tnode->right, list);
         lAddFront(createNode(tnode->firstName, tnode->lastName, tnode->birthDate, tnode->email, tnode->phone),list);
     }
+    return list;
 }
 
 LIST *treeToList(TREE *tree, LIST *list){
     treeToListPom(tree->root, list);
+    return list;
 }
 
 
@@ -495,6 +499,7 @@ TREE *tRebuild(TREE *tree, char *key){
 
 
 void tDeleteNode(TNODE *tnode, TREE *tree){
+
     LIST *list = treeToList(tree, createList());
     TREE *tmp = createTree();
     lDeleteNode(lFindPerson(tnode->firstName,tnode->lastName, list), list);
