@@ -54,6 +54,7 @@ void stopTimeAndPrint(){
 
 int main(int argc, char *argv[])
 {
+    printf("main4\n");
     srand(time(NULL));
     int iter = 1000;
     char firstName[BUFFER_LEN];
@@ -187,6 +188,7 @@ int main(int argc, char *argv[])
 
 
     tDeleteTree(tree);
+    tDeleteTree(tree); //generate core dump
     lDeleteList(list);
     return 0;
 }
