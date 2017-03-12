@@ -1,8 +1,5 @@
-cmake_minimum_required(VERSION 3.0)
-project(zad1)
-
-set(CMAKE_C_STANDARD 11)
-
-set(SOURCE_FILES main.c libaddrbook.c)
-add_executable(zad1 ${SOURCE_FILES})
-add_library(libaddrbook STATIC libaddrbook.c)
+cmake_minimum_required (VERSION 2.6)
+project (zad1)
+add_library(libaddrbook SHARED libaddrbook.c)
+add_library(libaddrbookStatic STATIC libaddrbook.c)
+set(CMAKE_C_FLAGS "-std=c99")
