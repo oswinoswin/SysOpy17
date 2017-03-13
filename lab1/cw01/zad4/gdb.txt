@@ -1,0 +1,12 @@
+Starting program: /home/student/Documents/SysOpy17/lab1/cw01/zad4/MainShared 
+
+Program received signal SIGSEGV, Segmentation fault.
+0x00007ffff7bd63fd in tDeletePom () from /home/student/Documents/SysOpy17/lab1/cw01/zad4/libshared.so
+
+Modyfikacja programu:
+Proba usuniecia obiektu juz usunietego.
+
+Wykorzystanie gdb:
+gdb ./MainStatic
+(odb) set logging on //zapisywanie do pliku
+
