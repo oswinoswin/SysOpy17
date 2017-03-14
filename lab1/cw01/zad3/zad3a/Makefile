@@ -3,12 +3,12 @@ CC=gcc
 CFLAGS=-Wall -g -std=c99
 ARFLAGS=crs
 
-all: mainStatic mainDynamic mainShared run
+all: mainStatic mainDynamic mainShared
 
 mainStatic: libstatic.a main.o
 	$(CC) main.o -o mainStatic -L. -lstatic 
 
-mainShared: libdynamic.so testprog.o
+mainShared: libdynamic.so main.o
 	$(CC) main.o -o mainShared -Wl,-rpath=. -L. -ldynamic
 	
 mainDynamic: libdynamic.so mainDynamic.o
@@ -31,12 +31,12 @@ libdynamic.o: libaddrbook.c libaddrbook.h
 	$(CC) $(CFLAGS) -c -fPIC -o libdynamic.o libaddrbook.c
 
 run:
-	echo "Static\n" >> results.txt 
+	echo "\n\nStatic" >> results.txt 
 	./mainStatic >> results.txt
-	echo "Shared\n" >> results.txt
+	echo "\n\nShared" >> results.txt
 	./mainShared >>results.txt
-	echo "Dynamic\n" >>results.txt
+	echo "\n\nDynamic" >>results.txt
 	./mainDynamic >> results.txt
 
 clean:
-	rm *.o *.so
+	rm *.o *.so *.a mainStatic mainDynamic mainShared

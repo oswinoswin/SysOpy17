@@ -1,4 +1,4 @@
-#include "../../zad1/libaddrbook.h"
+#include "libaddrbook.h"
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
