@@ -46,7 +46,7 @@ run:
 	./mainDynamic >> results.txt
 
 clean:
-	rm *.o *.so
+	rm *.o *.so *.a mainStatic mainDynamic mainShared
 
 action:
 	echo OPT is $(OPT)

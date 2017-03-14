@@ -1,309 +1,124 @@
+W większości przypadków czas real jest w przybliżeniu równy sumie
+czasu systemowego i użytkownika.
+
+Zgodnie z przewidywaniami, dla biblioteki statycznej 
+zaobserwowano najkrótsze czasy wykonania oraz największy rozmiar
+pliku wynikowego.
+
+OPT=-O0
+
 Static
 
 LIST:
 Creating address book:
-user: 000000000 ms, system: 000000000 ms, real: 000000135
+user: 000000000 ms, system: 000000000 ms, real: 000000102
 Adding an element:
-user: 000000020 ms, system: 000000000 ms, real: 000000021
+user: 000000008 ms, system: 000000000 ms, real: 000000008
 Deleting an element: optimistic: 
-user: 000000000 ms, system: 000000000 ms, real: 000000016
+user: 000000000 ms, system: 000000000 ms, real: 000000008
 Deleting an element: pesymistic: 
-user: 000000000 ms, system: 000000000 ms, real: 000001260
+user: 000000000 ms, system: 000000000 ms, real: 000000083
 Searching for an element: optimistic:
 user: 000000000 ms, system: 000000000 ms, real: 000000001
 Searching for an element: pesymistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000133
+user: 000000000 ms, system: 000000000 ms, real: 000000026
 Sort:
-user: 000004000 ms, system: 000000000 ms, real: 000000814
-TREE:
-Create tree:
-user: 000000000 ms, system: 000000000 ms, real: 000000006
-Adding an element:
-user: 000000008 ms, system: 000000008 ms, real: 000000016
-Deleting an element: optimistic: 
-user: 000008000 ms, system: 000000000 ms, real: 000009521
-Deleting an element: pesymistic: 
-user: 000004000 ms, system: 000004000 ms, real: 000008398
-Searching for an element: optimistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000002
-Searching for an element: pesymistic:
-user: 000000000 ms, system: 000004000 ms, real: 000000243
-Rebuild:
-user: 000000000 ms, system: 000008000 ms, real: 000008080
-Shared
-
-LIST:
-Creating address book:
-user: 000000000 ms, system: 000000000 ms, real: 000000140
-Adding an element:
-user: 000000004 ms, system: 000000000 ms, real: 000000011
-Deleting an element: optimistic: 
-user: 000000000 ms, system: 000000000 ms, real: 000000017
-Deleting an element: pesymistic: 
-user: 000000000 ms, system: 000000000 ms, real: 000000140
-Searching for an element: optimistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000002
-Searching for an element: pesymistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000028
-Sort:
-user: 000000000 ms, system: 000004000 ms, real: 000000321
+user: 000000000 ms, system: 000000000 ms, real: 000000495
 TREE:
 Create tree:
 user: 000000000 ms, system: 000000000 ms, real: 000000004
 Adding an element:
-user: 000000020 ms, system: 000000000 ms, real: 000000019
+user: 000000008 ms, system: 000000004 ms, real: 000000011
 Deleting an element: optimistic: 
-user: 000004000 ms, system: 000004000 ms, real: 000006771
+user: 000012000 ms, system: 000000000 ms, real: 000008671
 Deleting an element: pesymistic: 
-user: 000004000 ms, system: 000000000 ms, real: 000006323
+user: 000004000 ms, system: 000000000 ms, real: 000006137
 Searching for an element: optimistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000008
+user: 000000000 ms, system: 000000000 ms, real: 000000002
 Searching for an element: pesymistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000224
+user: 000000000 ms, system: 000000000 ms, real: 000000121
 Rebuild:
-user: 000004000 ms, system: 000004000 ms, real: 000010259
+user: 000004000 ms, system: 000004000 ms, real: 000008202
+
+Shared
+
+LIST:
+Creating address book:
+user: 000000000 ms, system: 000000000 ms, real: 000000139
+Adding an element:
+user: 000000000 ms, system: 000000008 ms, real: 000000010
+Deleting an element: optimistic: 
+user: 000000000 ms, system: 000000000 ms, real: 000000015
+Deleting an element: pesymistic: 
+user: 000000000 ms, system: 000000000 ms, real: 000000128
+Searching for an element: optimistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000003
+Searching for an element: pesymistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000059
+Sort:
+user: 000000000 ms, system: 000000000 ms, real: 000000700
+TREE:
+Create tree:
+user: 000000000 ms, system: 000000000 ms, real: 000000010
+Adding an element:
+user: 000000012 ms, system: 000000000 ms, real: 000000011
+Deleting an element: optimistic: 
+user: 000008000 ms, system: 000004000 ms, real: 000011295
+Deleting an element: pesymistic: 
+user: 000008000 ms, system: 000000000 ms, real: 000006765
+Searching for an element: optimistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000007
+Searching for an element: pesymistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000165
+Rebuild:
+user: 000004000 ms, system: 000004000 ms, real: 000006118
+
 Dynamic
 
 LIST:
 Creating address book:
 user: 000000000 ms, system: 000000000 ms, real: 000000002
 Adding an element:
-user: 000000004 ms, system: 000000008 ms, real: 000000014
+user: 000000012 ms, system: 000000000 ms, real: 000000009
 Deleting an element: optimistic: 
 user: 000000000 ms, system: 000000000 ms, real: 000000003
 Deleting an element: pesymistic: 
-user: 000000000 ms, system: 000000000 ms, real: 000000313
+user: 000000000 ms, system: 000000000 ms, real: 000000120
 Searching for an element: optimistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000001
+user: 000000000 ms, system: 000000000 ms, real: 000000002
 Searching for an element: pesymistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000112
-Sort:
-user: 000000000 ms, system: 000000000 ms, real: 000000425
-TREE:
-Create tree:
-user: 000000000 ms, system: 000000000 ms, real: 000000003
-Adding an element:
-user: 000000020 ms, system: 000000000 ms, real: 000000017
-Deleting an element: optimistic: 
-user: 000004000 ms, system: 000004000 ms, real: 000008577
-Deleting an element: pesymistic: 
-user: 000008000 ms, system: 000004000 ms, real: 000011558
-Searching for an element: optimistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000003
-Searching for an element: pesymistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000194
-Rebuild:
-user: 000008000 ms, system: 000000000 ms, real: 000007536
-
-Static
-
-LIST:
-Creating address book:
-user: 000000000 ms, system: 000000000 ms, real: 000000131
-Adding an element:
-user: 000000008 ms, system: 000000004 ms, real: 000000008
-Deleting an element: optimistic: 
-user: 000000000 ms, system: 000000000 ms, real: 000000009
-Deleting an element: pesymistic: 
 user: 000000000 ms, system: 000000000 ms, real: 000000107
-Searching for an element: optimistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000001
-Searching for an element: pesymistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000026
 Sort:
-user: 000000000 ms, system: 000000000 ms, real: 000000284
+user: 000000000 ms, system: 000000000 ms, real: 000000481
 TREE:
 Create tree:
-user: 000000000 ms, system: 000000000 ms, real: 000000002
-Adding an element:
-user: 000000012 ms, system: 000000000 ms, real: 000000012
-Deleting an element: optimistic: 
-user: 000004000 ms, system: 000004000 ms, real: 000006372
-Deleting an element: pesymistic: 
-user: 000004000 ms, system: 000000000 ms, real: 000005888
-Searching for an element: optimistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000002
-Searching for an element: pesymistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000328
-Rebuild:
-user: 000008000 ms, system: 000000000 ms, real: 000007008
-
-Shared
-
-LIST:
-Creating address book:
-user: 000000000 ms, system: 000000000 ms, real: 000000106
-Adding an element:
-user: 000000008 ms, system: 000000004 ms, real: 000000008
-Deleting an element: optimistic: 
-user: 000000000 ms, system: 000000000 ms, real: 000000026
-Deleting an element: pesymistic: 
-user: 000000000 ms, system: 000000000 ms, real: 000000329
-Searching for an element: optimistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000004
-Searching for an element: pesymistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000048
-Sort:
-user: 000000000 ms, system: 000000000 ms, real: 000000465
-TREE:
-Create tree:
-user: 000000000 ms, system: 000000000 ms, real: 000000007
-Adding an element:
-user: 000000008 ms, system: 000000000 ms, real: 000000010
-Deleting an element: optimistic: 
-user: 000000000 ms, system: 000008000 ms, real: 000008410
-Deleting an element: pesymistic: 
-user: 000000000 ms, system: 000008000 ms, real: 000007704
-Searching for an element: optimistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000008
-Searching for an element: pesymistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000221
-Rebuild:
-user: 000008000 ms, system: 000000000 ms, real: 000007397
-
-Dynamic
-
-LIST:
-Creating address book:
 user: 000000000 ms, system: 000000000 ms, real: 000000004
 Adding an element:
-user: 000000004 ms, system: 000000000 ms, real: 000000010
+user: 000000004 ms, system: 000000008 ms, real: 000000015
 Deleting an element: optimistic: 
-user: 000000000 ms, system: 000000000 ms, real: 000000003
+user: 000004000 ms, system: 000004000 ms, real: 000009714
 Deleting an element: pesymistic: 
-user: 000000000 ms, system: 000000000 ms, real: 000000158
+user: 000004000 ms, system: 000004000 ms, real: 000006247
 Searching for an element: optimistic:
 user: 000000000 ms, system: 000000000 ms, real: 000000002
 Searching for an element: pesymistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000065
-Sort:
-user: 000000000 ms, system: 000000000 ms, real: 000000468
-TREE:
-Create tree:
-user: 000000000 ms, system: 000000000 ms, real: 000000006
-Adding an element:
-user: 000000008 ms, system: 000000000 ms, real: 000000011
-Deleting an element: optimistic: 
-user: 000008000 ms, system: 000000000 ms, real: 000007102
-Deleting an element: pesymistic: 
-user: 000004000 ms, system: 000004000 ms, real: 000008865
-Searching for an element: optimistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000002
-Searching for an element: pesymistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000221
+user: 000000000 ms, system: 000000000 ms, real: 000000131
 Rebuild:
-user: 000008000 ms, system: 000000000 ms, real: 000006007
+user: 000008000 ms, system: 000000000 ms, real: 000005389
+
+OPT=-O1
 
 Static
 
 LIST:
 Creating address book:
-user: 000000000 ms, system: 000000000 ms, real: 000000109
-Adding an element:
-user: 000000000 ms, system: 000000004 ms, real: 000000007
-Deleting an element: optimistic: 
-user: 000000000 ms, system: 000000000 ms, real: 000000007
-Deleting an element: pesymistic: 
-user: 000000000 ms, system: 000000000 ms, real: 000000136
-Searching for an element: optimistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000001
-Searching for an element: pesymistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000040
-Sort:
-user: 000000000 ms, system: 000000000 ms, real: 000000304
-TREE:
-Create tree:
-user: 000000000 ms, system: 000000000 ms, real: 000000002
-Adding an element:
-user: 000000016 ms, system: 000000004 ms, real: 000000011
-Deleting an element: optimistic: 
-user: 000000000 ms, system: 000000000 ms, real: 000007535
-Deleting an element: pesymistic: 
-user: 000008000 ms, system: 000004000 ms, real: 000008882
-Searching for an element: optimistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000003
-Searching for an element: pesymistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000250
-Rebuild:
-user: 000004000 ms, system: 000004000 ms, real: 000007739
-
-Shared
-
-LIST:
-Creating address book:
-user: 000000000 ms, system: 000000000 ms, real: 000000117
-Adding an element:
-user: 000000008 ms, system: 000000004 ms, real: 000000008
-Deleting an element: optimistic: 
-user: 000000000 ms, system: 000000000 ms, real: 000000013
-Deleting an element: pesymistic: 
-user: 000000000 ms, system: 000000000 ms, real: 000000199
-Searching for an element: optimistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000004
-Searching for an element: pesymistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000078
-Sort:
-user: 000000000 ms, system: 000000000 ms, real: 000000371
-TREE:
-Create tree:
-user: 000000000 ms, system: 000000000 ms, real: 000000004
-Adding an element:
-user: 000000004 ms, system: 000000008 ms, real: 000000011
-Deleting an element: optimistic: 
-user: 000008000 ms, system: 000000000 ms, real: 000006525
-Deleting an element: pesymistic: 
-user: 000004000 ms, system: 000000000 ms, real: 000006013
-Searching for an element: optimistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000008
-Searching for an element: pesymistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000155
-Rebuild:
-user: 000008000 ms, system: 000000000 ms, real: 000007459
-
-Dynamic
-
-LIST:
-Creating address book:
-user: 000000000 ms, system: 000000000 ms, real: 000000002
-Adding an element:
-user: 000000000 ms, system: 000000008 ms, real: 000000007
-Deleting an element: optimistic: 
-user: 000000000 ms, system: 000000000 ms, real: 000000004
-Deleting an element: pesymistic: 
-user: 000000000 ms, system: 000000000 ms, real: 000000147
-Searching for an element: optimistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000002
-Searching for an element: pesymistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000039
-Sort:
-user: 000004000 ms, system: 000000000 ms, real: 000000561
-TREE:
-Create tree:
-user: 000000000 ms, system: 000000000 ms, real: 000000005
-Adding an element:
-user: 000000004 ms, system: 000000004 ms, real: 000000010
-Deleting an element: optimistic: 
-user: 000016000 ms, system: 000000000 ms, real: 000008956
-Deleting an element: pesymistic: 
-user: 000004000 ms, system: 000000000 ms, real: 000008578
-Searching for an element: optimistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000002
-Searching for an element: pesymistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000160
-Rebuild:
-user: 000000000 ms, system: 000004000 ms, real: 000005704
-
-Static
-
-LIST:
-Creating address book:
-user: 000000000 ms, system: 000000000 ms, real: 000000106
+user: 000000000 ms, system: 000000000 ms, real: 000000113
 Adding an element:
 user: 000000008 ms, system: 000000000 ms, real: 000000007
 Deleting an element: optimistic: 
-user: 000000000 ms, system: 000000000 ms, real: 000000009
+user: 000000000 ms, system: 000000000 ms, real: 000000007
 Deleting an element: pesymistic: 
-user: 000000000 ms, system: 000000000 ms, real: 000000103
+user: 000000000 ms, system: 000000000 ms, real: 000000109
 Searching for an element: optimistic:
 user: 000000000 ms, system: 000000000 ms, real: 000000001
 Searching for an element: pesymistic:
@@ -312,151 +127,255 @@ Sort:
 user: 000000000 ms, system: 000000000 ms, real: 000000288
 TREE:
 Create tree:
-user: 000000000 ms, system: 000000000 ms, real: 000000003
-Adding an element:
-user: 000000004 ms, system: 000000008 ms, real: 000000011
-Deleting an element: optimistic: 
-user: 000004000 ms, system: 000004000 ms, real: 000007463
-Deleting an element: pesymistic: 
-user: 000004000 ms, system: 000004000 ms, real: 000005882
-Searching for an element: optimistic:
 user: 000000000 ms, system: 000000000 ms, real: 000000002
+Adding an element:
+user: 000000008 ms, system: 000000004 ms, real: 000000010
+Deleting an element: optimistic: 
+user: 000004000 ms, system: 000004000 ms, real: 000009679
+Deleting an element: pesymistic: 
+user: 000008000 ms, system: 000000000 ms, real: 000006640
+Searching for an element: optimistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000003
 Searching for an element: pesymistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000137
+user: 000000000 ms, system: 000000000 ms, real: 000000172
 Rebuild:
-user: 000008000 ms, system: 000000000 ms, real: 000007449
+user: 000004000 ms, system: 000008000 ms, real: 000009735
 
 Shared
 
 LIST:
 Creating address book:
-user: 000000000 ms, system: 000000000 ms, real: 000000262
+user: 000000000 ms, system: 000000000 ms, real: 000000339
 Adding an element:
-user: 000000008 ms, system: 000000000 ms, real: 000000008
+user: 000000008 ms, system: 000000004 ms, real: 000000012
 Deleting an element: optimistic: 
-user: 000000000 ms, system: 000000000 ms, real: 000000013
+user: 000000000 ms, system: 000000000 ms, real: 000000011
 Deleting an element: pesymistic: 
-user: 000000000 ms, system: 000000000 ms, real: 000000139
+user: 000000000 ms, system: 000000000 ms, real: 000000136
 Searching for an element: optimistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000003
+user: 000000000 ms, system: 000000000 ms, real: 000000002
 Searching for an element: pesymistic:
-user: 000004000 ms, system: 000000000 ms, real: 000000042
+user: 000000000 ms, system: 000000000 ms, real: 000000038
 Sort:
-user: 000000000 ms, system: 000000000 ms, real: 000000420
+user: 000000000 ms, system: 000000000 ms, real: 000000408
 TREE:
 Create tree:
 user: 000000000 ms, system: 000000000 ms, real: 000000007
 Adding an element:
-user: 000000004 ms, system: 000000004 ms, real: 000000014
+user: 000000008 ms, system: 000000004 ms, real: 000000012
 Deleting an element: optimistic: 
-user: 000012000 ms, system: 000000000 ms, real: 000010103
+user: 000008000 ms, system: 000000000 ms, real: 000008482
 Deleting an element: pesymistic: 
-user: 000008000 ms, system: 000000000 ms, real: 000007891
+user: 000004000 ms, system: 000004000 ms, real: 000008710
 Searching for an element: optimistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000008
+user: 000000000 ms, system: 000000000 ms, real: 000000010
 Searching for an element: pesymistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000172
+user: 000000000 ms, system: 000000000 ms, real: 000000247
 Rebuild:
-user: 000012000 ms, system: 000000000 ms, real: 000007907
+user: 000008000 ms, system: 000004000 ms, real: 000010301
 
 Dynamic
 
 LIST:
 Creating address book:
-user: 000000000 ms, system: 000000000 ms, real: 000000002
-Adding an element:
-user: 000000008 ms, system: 000000000 ms, real: 000000008
-Deleting an element: optimistic: 
 user: 000000000 ms, system: 000000000 ms, real: 000000003
-Deleting an element: pesymistic: 
-user: 000000000 ms, system: 000000000 ms, real: 000000137
-Searching for an element: optimistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000001
-Searching for an element: pesymistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000092
-Sort:
-user: 000000000 ms, system: 000000000 ms, real: 000000320
-TREE:
-Create tree:
-user: 000000000 ms, system: 000000000 ms, real: 000000002
 Adding an element:
-user: 000000008 ms, system: 000000004 ms, real: 000000010
+user: 000000008 ms, system: 000000000 ms, real: 000000009
 Deleting an element: optimistic: 
-user: 000012000 ms, system: 000000000 ms, real: 000009904
-Deleting an element: pesymistic: 
-user: 000000000 ms, system: 000004000 ms, real: 000006943
-Searching for an element: optimistic:
 user: 000000000 ms, system: 000000000 ms, real: 000000002
-Searching for an element: pesymistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000151
-Rebuild:
-user: 000008000 ms, system: 000000000 ms, real: 000005710
-
-Static
-
-LIST:
-Creating address book:
-user: 000000000 ms, system: 000000000 ms, real: 000000105
-Adding an element:
-user: 000000000 ms, system: 000000008 ms, real: 000000008
-Deleting an element: optimistic: 
-user: 000000000 ms, system: 000000000 ms, real: 000000009
 Deleting an element: pesymistic: 
-user: 000000000 ms, system: 000000000 ms, real: 000000144
+user: 000000000 ms, system: 000000000 ms, real: 000000139
 Searching for an element: optimistic:
 user: 000000000 ms, system: 000000000 ms, real: 000000001
 Searching for an element: pesymistic:
 user: 000000000 ms, system: 000000000 ms, real: 000000036
 Sort:
-user: 000000000 ms, system: 000000000 ms, real: 000000378
+user: 000000000 ms, system: 000000000 ms, real: 000000312
+TREE:
+Create tree:
+user: 000000000 ms, system: 000000000 ms, real: 000000002
+Adding an element:
+user: 000000004 ms, system: 000000004 ms, real: 000000009
+Deleting an element: optimistic: 
+user: 000000000 ms, system: 000008000 ms, real: 000010612
+Deleting an element: pesymistic: 
+user: 000004000 ms, system: 000004000 ms, real: 000007520
+Searching for an element: optimistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000002
+Searching for an element: pesymistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000176
+Rebuild:
+user: 000008000 ms, system: 000000000 ms, real: 000005780
+
+
+OPT=-O1
+
+Static
+
+LIST:
+Creating address book:
+user: 000000000 ms, system: 000000000 ms, real: 000000104
+Adding an element:
+user: 000000004 ms, system: 000000004 ms, real: 000000007
+Deleting an element: optimistic: 
+user: 000000000 ms, system: 000000000 ms, real: 000000010
+Deleting an element: pesymistic: 
+user: 000000000 ms, system: 000000000 ms, real: 000000112
+Searching for an element: optimistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000001
+Searching for an element: pesymistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000038
+Sort:
+user: 000000000 ms, system: 000000000 ms, real: 000000323
 TREE:
 Create tree:
 user: 000000000 ms, system: 000000000 ms, real: 000000003
 Adding an element:
-user: 000000012 ms, system: 000000004 ms, real: 000000012
+user: 000000008 ms, system: 000000004 ms, real: 000000011
 Deleting an element: optimistic: 
-user: 000008000 ms, system: 000000000 ms, real: 000006491
+user: 000004000 ms, system: 000008000 ms, real: 000008512
 Deleting an element: pesymistic: 
-user: 000008000 ms, system: 000000000 ms, real: 000007836
+user: 000004000 ms, system: 000000000 ms, real: 000006018
 Searching for an element: optimistic:
 user: 000000000 ms, system: 000000000 ms, real: 000000002
 Searching for an element: pesymistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000216
+user: 000000000 ms, system: 000000000 ms, real: 000000108
 Rebuild:
-user: 000008000 ms, system: 000004000 ms, real: 000010355
+user: 000004000 ms, system: 000000000 ms, real: 000005165
 
 Shared
 
 LIST:
 Creating address book:
-user: 000000000 ms, system: 000000000 ms, real: 000000105
+user: 000000000 ms, system: 000000000 ms, real: 000000140
 Adding an element:
-user: 000000008 ms, system: 000000004 ms, real: 000000010
+user: 000000008 ms, system: 000000000 ms, real: 000000012
 Deleting an element: optimistic: 
-user: 000000000 ms, system: 000000000 ms, real: 000000013
+user: 000000000 ms, system: 000000000 ms, real: 000000014
 Deleting an element: pesymistic: 
-user: 000000000 ms, system: 000000000 ms, real: 000000152
+user: 000000000 ms, system: 000004000 ms, real: 000000134
 Searching for an element: optimistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000002
+Searching for an element: pesymistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000025
+Sort:
+user: 000000000 ms, system: 000000000 ms, real: 000000487
+TREE:
+Create tree:
+user: 000000000 ms, system: 000000000 ms, real: 000000008
+Adding an element:
+user: 000000008 ms, system: 000000004 ms, real: 000000013
+Deleting an element: optimistic: 
+user: 000004000 ms, system: 000008000 ms, real: 000009080
+Deleting an element: pesymistic: 
+user: 000004000 ms, system: 000004000 ms, real: 000008868
+Searching for an element: optimistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000010
+Searching for an element: pesymistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000173
+Rebuild:
+user: 000012000 ms, system: 000000000 ms, real: 000010040
+
+Dynamic
+
+LIST:
+Creating address book:
 user: 000000000 ms, system: 000000000 ms, real: 000000003
+Adding an element:
+user: 000000008 ms, system: 000000004 ms, real: 000000011
+Deleting an element: optimistic: 
+user: 000000000 ms, system: 000000000 ms, real: 000000003
+Deleting an element: pesymistic: 
+user: 000000000 ms, system: 000000000 ms, real: 000000175
+Searching for an element: optimistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000001
+Searching for an element: pesymistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000048
+Sort:
+user: 000000000 ms, system: 000000000 ms, real: 000000307
+TREE:
+Create tree:
+user: 000000000 ms, system: 000000000 ms, real: 000000002
+Adding an element:
+user: 000000000 ms, system: 000000008 ms, real: 000000009
+Deleting an element: optimistic: 
+user: 000008000 ms, system: 000000000 ms, real: 000008475
+Deleting an element: pesymistic: 
+user: 000004000 ms, system: 000004000 ms, real: 000006535
+Searching for an element: optimistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000002
+Searching for an element: pesymistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000163
+Rebuild:
+user: 000004000 ms, system: 000000000 ms, real: 000005754
+
+OPT=-O2
+
+Static
+
+LIST:
+Creating address book:
+user: 000000000 ms, system: 000000000 ms, real: 000000102
+Adding an element:
+user: 000000008 ms, system: 000000004 ms, real: 000000009
+Deleting an element: optimistic: 
+user: 000000000 ms, system: 000000000 ms, real: 000000008
+Deleting an element: pesymistic: 
+user: 000000000 ms, system: 000000000 ms, real: 000000141
+Searching for an element: optimistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000001
 Searching for an element: pesymistic:
 user: 000000000 ms, system: 000000000 ms, real: 000000041
 Sort:
-user: 000000000 ms, system: 000000000 ms, real: 000000352
+user: 000000000 ms, system: 000000000 ms, real: 000000279
 TREE:
 Create tree:
-user: 000000000 ms, system: 000000000 ms, real: 000000005
+user: 000000000 ms, system: 000000000 ms, real: 000000002
 Adding an element:
-user: 000000016 ms, system: 000000000 ms, real: 000000009
+user: 000000004 ms, system: 000000008 ms, real: 000000012
 Deleting an element: optimistic: 
-user: 000008000 ms, system: 000000000 ms, real: 000009855
+user: 000008000 ms, system: 000004000 ms, real: 000009835
 Deleting an element: pesymistic: 
-user: 000004000 ms, system: 000000000 ms, real: 000006693
+user: 000004000 ms, system: 000000000 ms, real: 000005815
+Searching for an element: optimistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000002
+Searching for an element: pesymistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000107
+Rebuild:
+user: 000008000 ms, system: 000000000 ms, real: 000008174
+
+Shared
+
+LIST:
+Creating address book:
+user: 000000000 ms, system: 000000000 ms, real: 000000106
+Adding an element:
+user: 000000012 ms, system: 000000000 ms, real: 000000010
+Deleting an element: optimistic: 
+user: 000000000 ms, system: 000000000 ms, real: 000000011
+Deleting an element: pesymistic: 
+user: 000000000 ms, system: 000000000 ms, real: 000000125
+Searching for an element: optimistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000003
+Searching for an element: pesymistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000104
+Sort:
+user: 000000000 ms, system: 000000000 ms, real: 000000452
+TREE:
+Create tree:
+user: 000000000 ms, system: 000000000 ms, real: 000000006
+Adding an element:
+user: 000000012 ms, system: 000000000 ms, real: 000000010
+Deleting an element: optimistic: 
+user: 000004000 ms, system: 000004000 ms, real: 000006936
+Deleting an element: pesymistic: 
+user: 000004000 ms, system: 000004000 ms, real: 000007032
 Searching for an element: optimistic:
 user: 000000000 ms, system: 000000000 ms, real: 000000009
 Searching for an element: pesymistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000149
+user: 000000000 ms, system: 000000000 ms, real: 000000194
 Rebuild:
-user: 000004000 ms, system: 000000000 ms, real: 000006767
+user: 000008000 ms, system: 000000000 ms, real: 000006431
 
 Dynamic
 
@@ -464,29 +383,248 @@ LIST:
 Creating address book:
 user: 000000000 ms, system: 000000000 ms, real: 000000004
 Adding an element:
-user: 000000008 ms, system: 000000004 ms, real: 000000012
+user: 000000008 ms, system: 000000000 ms, real: 000000010
 Deleting an element: optimistic: 
-user: 000000000 ms, system: 000000000 ms, real: 000000003
+user: 000000000 ms, system: 000000000 ms, real: 000000002
 Deleting an element: pesymistic: 
-user: 000000000 ms, system: 000000000 ms, real: 000000161
+user: 000000000 ms, system: 000000000 ms, real: 000000178
 Searching for an element: optimistic:
 user: 000000000 ms, system: 000000000 ms, real: 000000001
 Searching for an element: pesymistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000042
+user: 000000000 ms, system: 000000000 ms, real: 000000046
 Sort:
-user: 000000000 ms, system: 000000000 ms, real: 000000325
+user: 000000000 ms, system: 000000000 ms, real: 000000323
 TREE:
 Create tree:
 user: 000000000 ms, system: 000000000 ms, real: 000000002
 Adding an element:
-user: 000000012 ms, system: 000000000 ms, real: 000000010
+user: 000000004 ms, system: 000000000 ms, real: 000000008
 Deleting an element: optimistic: 
-user: 000008000 ms, system: 000000000 ms, real: 000006194
+user: 000000000 ms, system: 000008000 ms, real: 000007572
 Deleting an element: pesymistic: 
-user: 000004000 ms, system: 000000000 ms, real: 000005868
+user: 000004000 ms, system: 000000000 ms, real: 000005686
 Searching for an element: optimistic:
 user: 000000000 ms, system: 000000000 ms, real: 000000001
 Searching for an element: pesymistic:
-user: 000000000 ms, system: 000000000 ms, real: 000000150
+user: 000000000 ms, system: 000000000 ms, real: 000000112
 Rebuild:
-user: 000008000 ms, system: 000000000 ms, real: 000006909
+user: 000000000 ms, system: 000004000 ms, real: 000005152
+
+size mainDynamic
+   text	   data	    bss	    dec	    hex	filename
+   7182	    688	    688	   8558	   216e	mainDynamic
+
+
+OPT=-O3
+
+Static
+
+LIST:
+Creating address book:
+user: 000000000 ms, system: 000000000 ms, real: 000000097
+Adding an element:
+user: 000000008 ms, system: 000000004 ms, real: 000000009
+Deleting an element: optimistic: 
+user: 000000000 ms, system: 000000000 ms, real: 000000008
+Deleting an element: pesymistic: 
+user: 000000000 ms, system: 000000000 ms, real: 000000110
+Searching for an element: optimistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000001
+Searching for an element: pesymistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000025
+Sort:
+user: 000000000 ms, system: 000000000 ms, real: 000000280
+TREE:
+Create tree:
+user: 000000000 ms, system: 000000000 ms, real: 000000002
+Adding an element:
+user: 000000016 ms, system: 000000000 ms, real: 000000012
+Deleting an element: optimistic: 
+user: 000004000 ms, system: 000000000 ms, real: 000006271
+Deleting an element: pesymistic: 
+user: 000000000 ms, system: 000004000 ms, real: 000005945
+Searching for an element: optimistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000001
+Searching for an element: pesymistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000163
+Rebuild:
+user: 000008000 ms, system: 000000000 ms, real: 000006432
+
+Shared
+
+LIST:
+Creating address book:
+user: 000000000 ms, system: 000000000 ms, real: 000000143
+Adding an element:
+user: 000000012 ms, system: 000000000 ms, real: 000000009
+Deleting an element: optimistic: 
+user: 000000000 ms, system: 000000000 ms, real: 000000013
+Deleting an element: pesymistic: 
+user: 000000000 ms, system: 000000000 ms, real: 000000159
+Searching for an element: optimistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000002
+Searching for an element: pesymistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000040
+Sort:
+user: 000000000 ms, system: 000000000 ms, real: 000000526
+TREE:
+Create tree:
+user: 000000000 ms, system: 000000000 ms, real: 000000010
+Adding an element:
+user: 000000012 ms, system: 000000000 ms, real: 000000009
+Deleting an element: optimistic: 
+user: 000008000 ms, system: 000000000 ms, real: 000010158
+Deleting an element: pesymistic: 
+user: 000008000 ms, system: 000000000 ms, real: 000008117
+Searching for an element: optimistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000012
+Searching for an element: pesymistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000264
+Rebuild:
+user: 000004000 ms, system: 000004000 ms, real: 000007513
+
+Dynamic
+
+LIST:
+Creating address book:
+user: 000000000 ms, system: 000000000 ms, real: 000000006
+Adding an element:
+user: 000000008 ms, system: 000000004 ms, real: 000000011
+Deleting an element: optimistic: 
+user: 000000000 ms, system: 000000000 ms, real: 000000003
+Deleting an element: pesymistic: 
+user: 000000000 ms, system: 000000000 ms, real: 000000237
+Searching for an element: optimistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000001
+Searching for an element: pesymistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000050
+Sort:
+user: 000000000 ms, system: 000000000 ms, real: 000000509
+TREE:
+Create tree:
+user: 000000000 ms, system: 000000000 ms, real: 000000003
+Adding an element:
+user: 000000012 ms, system: 000000000 ms, real: 000000009
+Deleting an element: optimistic: 
+user: 000004000 ms, system: 000004000 ms, real: 000008439
+Deleting an element: pesymistic: 
+user: 000004000 ms, system: 000000000 ms, real: 000005796
+Searching for an element: optimistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000002
+Searching for an element: pesymistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000178
+Rebuild:
+user: 000004000 ms, system: 000000000 ms, real: 000005014
+
+size mainDynamic
+   text	   data	    bss	    dec	    hex	filename
+   7899	    688	    688	   9275	   243b	mainDynamic
+
+OPT=-Os
+
+Static
+
+LIST:
+Creating address book:
+user: 000000000 ms, system: 000000000 ms, real: 000000102
+Adding an element:
+user: 000000008 ms, system: 000000000 ms, real: 000000008
+Deleting an element: optimistic: 
+user: 000000000 ms, system: 000000000 ms, real: 000000009
+Deleting an element: pesymistic: 
+user: 000000000 ms, system: 000000000 ms, real: 000000112
+Searching for an element: optimistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000001
+Searching for an element: pesymistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000025
+Sort:
+user: 000004000 ms, system: 000000000 ms, real: 000000483
+TREE:
+Create tree:
+user: 000000000 ms, system: 000000000 ms, real: 000000004
+Adding an element:
+user: 000000012 ms, system: 000000000 ms, real: 000000012
+Deleting an element: optimistic: 
+user: 000000000 ms, system: 000004000 ms, real: 000005756
+Deleting an element: pesymistic: 
+user: 000004000 ms, system: 000004000 ms, real: 000006416
+Searching for an element: optimistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000002
+Searching for an element: pesymistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000157
+Rebuild:
+user: 000004000 ms, system: 000000000 ms, real: 000005183
+
+Shared
+
+LIST:
+Creating address book:
+user: 000000000 ms, system: 000000000 ms, real: 000000108
+Adding an element:
+user: 000000008 ms, system: 000000000 ms, real: 000000008
+Deleting an element: optimistic: 
+user: 000000000 ms, system: 000000000 ms, real: 000000011
+Deleting an element: pesymistic: 
+user: 000000000 ms, system: 000000000 ms, real: 000000153
+Searching for an element: optimistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000002
+Searching for an element: pesymistic:
+user: 000000000 ms, system: 000004000 ms, real: 000000043
+Sort:
+user: 000000000 ms, system: 000000000 ms, real: 000000355
+TREE:
+Create tree:
+user: 000000000 ms, system: 000000000 ms, real: 000000003
+Adding an element:
+user: 000000008 ms, system: 000000000 ms, real: 000000009
+Deleting an element: optimistic: 
+user: 000004000 ms, system: 000008000 ms, real: 000009824
+Deleting an element: pesymistic: 
+user: 000004000 ms, system: 000000000 ms, real: 000006823
+Searching for an element: optimistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000012
+Searching for an element: pesymistic:
+user: 000000000 ms, system: 000004000 ms, real: 000000209
+Rebuild:
+user: 000008000 ms, system: 000000000 ms, real: 000007587
+
+Dynamic
+
+LIST:
+Creating address book:
+user: 000000000 ms, system: 000000000 ms, real: 000000004
+Adding an element:
+user: 000000008 ms, system: 000000000 ms, real: 000000008
+Deleting an element: optimistic: 
+user: 000000000 ms, system: 000000000 ms, real: 000000003
+Deleting an element: pesymistic: 
+user: 000000000 ms, system: 000000000 ms, real: 000000251
+Searching for an element: optimistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000001
+Searching for an element: pesymistic:
+user: 000000000 ms, system: 000004000 ms, real: 000000137
+Sort:
+user: 000000000 ms, system: 000000000 ms, real: 000000360
+TREE:
+Create tree:
+user: 000000000 ms, system: 000000000 ms, real: 000000003
+Adding an element:
+user: 000000004 ms, system: 000000004 ms, real: 000000009
+Deleting an element: optimistic: 
+user: 000008000 ms, system: 000000000 ms, real: 000008498
+Deleting an element: pesymistic: 
+user: 000004000 ms, system: 000004000 ms, real: 000006897
+Searching for an element: optimistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000002
+Searching for an element: pesymistic:
+user: 000000000 ms, system: 000000000 ms, real: 000000158
+Rebuild:
+user: 000000000 ms, system: 000008000 ms, real: 000005696
+
+size mainDynamic
+   text	   data	    bss	    dec	    hex	filename
+   6485	    688	    688	   7861	   1eb5	mainDynamic //nieznacznie mniejszy rozmiar niż dla -O3
+
+size mainStatic
+   text	   data	    bss	    dec	    hex	filename
+  14078	    680	    560	  15318	   3bd6	mainStatic
