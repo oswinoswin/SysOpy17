@@ -4,13 +4,26 @@
 #include <string.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <sys/time.h>
+#include <sys/time.h>
+#include <sys/resource.h>
+
+
+
+
+struct timeval uStart, uEnd, sStart, sEnd, rEnd, rStart;
+struct rusage ruStart, ruEnd;
+long double uSum, sSum, rSum;
+
+void startTime();
+void stopTime();
+void stopTimeAndPrint();
 
 int swapInFileLib(unsigned char *buffer1, unsigned char *buffer2, int recordSize, FILE *fileDesc);
 void bubbleSortLib(FILE *fileHandle, unsigned char *buffer1, unsigned char *buffer2, int recordSize);
 int swapInFileSys(unsigned char *buffer1, unsigned char *buffer2, int recordSize, int fileDesc);
 void bubbleSortSys(int fileHandle, unsigned char *buffer1, unsigned char *buffer2, int recordSize);
 void shuffleLib(FILE *fileHandle, unsigned char *buffer1, unsigned char *buffer2, int recordSize);
-
 void shuffleSys(int fileDesc, unsigned char *buffer1, unsigned char *buffer2, int recordSize);
 
 int main (int argc, char *args[]) {
@@ -50,7 +63,8 @@ int main (int argc, char *args[]) {
 
     //-----------GENERATE-----------------------------------
     if(strcmp(op, "generate") == 0) {
-
+        printf("generating %d records, length: %d\n", ra, rl);
+        startTime();
         fileDesc = fopen(filename, "w");
         if(fileDesc == NULL) {
             fprintf(stderr, "fopen error\n");
@@ -76,10 +90,12 @@ int main (int argc, char *args[]) {
 
         fclose(devRandom);
         fclose(fileDesc);
+        stopTimeAndPrint();
     }
 //-------sort------------------------------------------------------
     else if( strcmp(op, "sort") == 0  && strcmp(mode, "lib") == 0 ){
-
+        printf("(lib) sorting %d records, length: %d\n", ra, rl);
+        startTime();
         fileDesc = fopen(filename, "r+w");
         if(fileDesc == NULL) {
             fprintf(stderr, "fopen error\n");
@@ -93,10 +109,13 @@ int main (int argc, char *args[]) {
 
         bubbleSortLib(fileDesc, buffer1, buffer2, rl);
         fclose(fileDesc);
+        stopTimeAndPrint();
     }
 
     else if( strcmp(op, "sort") == 0  && strcmp(mode, "sys") == 0 ){
 
+        printf("(sys) sorting %d records, length: %d\n", ra, rl);
+        startTime();
 
         if ((intHandle = open(filename, O_RDWR)) == -1) {
             fprintf(stderr, "open error\n");
@@ -109,11 +128,14 @@ int main (int argc, char *args[]) {
             fprintf(stderr, "close error\n");
             exit(EXIT_FAILURE);
         }
-
+        stopTimeAndPrint();
     }
 
     //-----shuffle----------------------------------------------------
     else if( strcmp(op, "shuffle") == 0  && strcmp(mode, "lib") == 0 ){
+
+        printf("(lib) shuffling %d records, length: %d\n", ra, rl);
+        startTime();
 
         fileDesc = fopen(filename, "r+w");
         if(fileDesc == NULL) {
@@ -128,11 +150,14 @@ int main (int argc, char *args[]) {
 
         shuffleLib(fileDesc, buffer1, buffer2, rl);
         fclose(fileDesc);
+        stopTimeAndPrint();
 
     }
 
     else if( strcmp(op, "shuffle") == 0  && strcmp(mode, "sys") == 0 ){
 
+        printf("(sys) shuffling %d records, length: %d\n", ra, rl);
+        startTime();
 
         if ((intHandle = open(filename, O_RDWR)) == -1) {
             fprintf(stderr, "open error\n");
@@ -145,6 +170,7 @@ int main (int argc, char *args[]) {
             fprintf(stderr, "close error\n");
             exit(EXIT_FAILURE);
         }
+        stopTimeAndPrint();
 
     }
 
@@ -416,6 +442,35 @@ void shuffleLib(FILE *fileHandle, unsigned char *buffer1, unsigned char *buffer2
     }
 
 
+}
+
+
+
+void startTime(){
+
+    getrusage(RUSAGE_SELF, &ruStart);
+    gettimeofday(&rStart, NULL);
+
+}
+void stopTime(){
+    getrusage(RUSAGE_SELF, &ruEnd);
+    gettimeofday(&rEnd, NULL);
+
+    uStart = ruStart.ru_utime;
+    uEnd = ruEnd.ru_utime;
+    sStart = ruStart.ru_stime;
+    sEnd = ruEnd.ru_stime;
+}
+
+void stopTimeAndPrint(){
+    stopTime();
+    printf("user: %09ld ms, system: %09ld ms, real: %09ld\n",
+           (( uEnd.tv_sec - uStart.tv_sec)*1000000L
+            + uEnd.tv_usec) - uStart.tv_usec,
+           (( sEnd.tv_sec - sStart.tv_sec)*1000000L
+            + sEnd.tv_usec) - sStart.tv_usec,
+           (( rEnd.tv_sec - rStart.tv_sec)*1000000L
+            + rEnd.tv_usec) - rStart.tv_usec);
 }
 
 
