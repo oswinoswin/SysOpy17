@@ -8,6 +8,7 @@ int main(int argc, char *args[]) {
 	char tmp;
 	int size, amount, wr, i ,j;
 	FILE *output;
+
 	
 	
 	srand(time(NULL));

@@ -11,9 +11,8 @@
 #define INITIAL_BUFF_SIZE 1024
 char * displayRights(mode_t rights);
 
-void traverseFiles(char *pathbuffer, char *name, int size);
-int checkAccessPerm(mode_t mode);
-mode_t decodeRights(int rights);
+void traverseFiles(char *pathbuffer, char *name, long size);
+
 
 static size_t bufflen = INITIAL_BUFF_SIZE;
 
@@ -22,14 +21,14 @@ int main(int argc, char *args[]) {
     char *pathbuffer;
     int len;
 
-    int size;
+    long size;
 
     if (argc != 3) {
         fprintf(stderr, "usage: <file path> <max size in bythes>\n");
         exit(EXIT_FAILURE);
     }
 
-    size = atoi(args[2]);
+    size = atol(args[2]);
 
     len = strlen(args[1]);
     if (len > bufflen) {
@@ -41,13 +40,21 @@ int main(int argc, char *args[]) {
         exit(EXIT_FAILURE);
     }
 
-    strcpy(pathbuffer, args[1]);
+    if (args[1][0] != '/') {
+        /* relative path - get absolute path */
+        if ((pathbuffer = realpath(args[1], pathbuffer)) == NULL) {
+            fprintf(stderr, "realpath error\n");
+            exit(EXIT_FAILURE);
+        }
+    }
+
+    //strcpy(pathbuffer, args[1]);
     traverseFiles(pathbuffer, basename(pathbuffer), size);
 
     return 0;
 }
 
-void traverseFiles(char *pathbuffer, char *relPath, int size) {
+void traverseFiles(char *pathbuffer, char *path, long size) {
     struct stat fStat;
     struct dirent *dirp;
     struct tm *date;
@@ -60,11 +67,11 @@ void traverseFiles(char *pathbuffer, char *relPath, int size) {
         return;
     } else if (S_ISREG(fStat.st_mode) != 0) {
         /* is regular file */
-        if ((long)fStat.st_size < size) {
+        if ((long)fStat.st_size <= size) {
             time = &(fStat.st_atim.tv_sec);
             date = localtime(time);
-            printf("/%s, %ld bytes, rights %s, last accessed %s",
-                   relPath, (long)fStat.st_size,displayRights(fStat.st_mode), asctime(date));
+            printf("%s, %ld bytes, rights %s, last accessed %s",
+                   pathbuffer, (long)fStat.st_size,displayRights(fStat.st_mode), asctime(date));
         }
         return;
     } else if (S_ISDIR(fStat.st_mode) == 0) {
@@ -92,7 +99,7 @@ void traverseFiles(char *pathbuffer, char *relPath, int size) {
     while ((dirp = readdir(dir)) != NULL) {
         if (strcmp(dirp->d_name, ".") != 0 && strcmp(dirp->d_name, "..") != 0) {
             strcpy(&pathbuffer[len], dirp->d_name);
-            traverseFiles(pathbuffer, relPath, size);
+            traverseFiles(pathbuffer, path, size);
         }
     }
 
@@ -173,33 +180,11 @@ char *displayRights(mode_t rights){
     else{
         res = strcat(res, "-");
     }
-
     return res;
 
 }
 
-/*
- * Crates a complete size - uses predefined values for permission bits
- * */
-mode_t decodeRights(int rights) {
-    mode_t mask = 0;
-    int masksDecoders[9] = {400, 200, 100, 40, 20, 10, 4, 2, 1};
-    mode_t masksValues[9]= 	{
-            S_IRUSR, S_IWUSR, S_IXUSR,
-            S_IRGRP, S_IWGRP, S_IXGRP,
-            S_IROTH, S_IWOTH, S_IXOTH
-    };
 
-    int i;
-    for (i = 0; i < 9; i++) {
-        if ((rights - masksDecoders[i]) >= 0) {
-            rights -= masksDecoders[i];
-            mask |= masksValues[i];
-        }
-    }
-
-    return mask;
-}
 
 
 
