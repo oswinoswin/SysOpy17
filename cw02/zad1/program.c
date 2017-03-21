@@ -368,7 +368,6 @@ void shuffleSys(int fileDesc, unsigned char *buffer1, unsigned char *buffer2, in
 }
 
 void shuffleLib(FILE *fileHandle, unsigned char *buffer1, unsigned char *buffer2, int recordSize) {
-    size_t res;
 
     long offsetEnd;
     long nmax, n, j;
@@ -472,10 +471,3 @@ void stopTimeAndPrint(){
            (( rEnd.tv_sec - rStart.tv_sec)*1000000L
             + rEnd.tv_usec) - rStart.tv_usec);
 }
-
-
-
-
-
-
-

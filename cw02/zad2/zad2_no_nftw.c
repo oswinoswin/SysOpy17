@@ -6,20 +6,17 @@
 #include <sys/stat.h>
 #include <libgen.h>
 #include <sys/types.h>
-#include <values.h>
+
 
 #define INITIAL_BUFF_SIZE 1024
 char * displayRights(mode_t rights);
 
 void traverseFiles(char *pathbuffer, char *name, long size);
-
-
 static size_t bufflen = INITIAL_BUFF_SIZE;
-
 
 int main(int argc, char *args[]) {
     char *pathbuffer;
-    int len;
+    size_t len;
 
     long size;
 

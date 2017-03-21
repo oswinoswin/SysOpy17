@@ -7,18 +7,20 @@
 #include <limits.h>
 #include <string.h>
 
+#define INITIAL_BUFF_SIZE 1024
 int process(const char *, const struct stat *, int, struct FTW *);
 char *displayRights(long rights);
+static size_t bufflen = INITIAL_BUFF_SIZE;
 
 static char *ptr;
 
 long size;
 
 
-
 int main(int argc, char *args[]) {
 
     int len;
+    char *pathbuffer;
 
     if (argc != 3) {
         fprintf(stderr, "usage: <file path> <max size in bythes>\n");
