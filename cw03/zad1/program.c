@@ -16,11 +16,20 @@
 #define ARGS_NO 30
 pid_t pid;
 int status;
+char *ev;
+extern char** environ;
 
-void handle_programs(char **arg);
+void handle_programs(char **arg, char * buffer);
 
 
 char ** split_str(char *str, char **result);
+
+void free_arg(char **pString);
+
+void handle_env_variables(char *buffer);
+
+void print_env();
+
 /*
 
 struct timeval uStart, uEnd, sStart, sEnd, rEnd, rStart;
@@ -39,6 +48,7 @@ int main (int argc, char *args[]) {
     int buf_size = 512; //record length
     FILE *fileDesc;
     char *buffer;
+    char **arg;
 
 
     if(argc != 2) {
@@ -62,52 +72,56 @@ int main (int argc, char *args[]) {
 
     //read lines from file
     while(fgets(buffer, buf_size, fileDesc)){
+        printf("COMMAND: %s\n", buffer);
         if(strncmp("#",buffer,1) == 0){
-            printf("handle env variables\n");
+            handle_env_variables(buffer);
         }
         else{
-            printf("handle normal programs\n");
-            printf("In buffer: %s\n", buffer);
-            char **arg = split_str(buffer,arg);
-
-            handle_programs(arg);
+            arg = split_str(buffer, arg);
+            handle_programs(arg, buffer);
 
         }
     }
 
+    //free_arg(arg);
+    free(buffer);
     fclose(fileDesc);
     return 0;
 }
 
 
-void handle_programs(char **arg) {
-    if ((pid = fork()) < 0) {
-        fprintf(stderr, "fork error\n");
-        return;
-    }
-    else if(pid == 0){
-        static char** yoMum;
-        //split_str(buffer, yoMum);
-        int i = 0;
-        while(arg[i]!=NULL){
-            printf("arg: %s\n", arg[i++]);
-        }
 
-        if (execvp(arg[0], arg) < 0) {
-            fprintf(stderr, "execle error\n");
-            return;
-        }
-        printf("Hello from child\n");
-        exit(0);
+void handle_env_variables(char *buffer) {
+
+    char *name = buffer;
+    char *value;
+    value = strtok (name, " ,\n");
+    value =  strtok (NULL, " ,\n");
+    name++; //get rid of #
+    if(value != NULL){
+        setenv(name, value, 1);
+        printf("At %s is value: %s\n", name, getenv(name));
+    }else if(getenv(name) != NULL){
+        unsetenv(name);
+        printf("Deleting: %s\n", name);
     }
-    if(wait(&status) != pid){
-        fprintf(stderr, "wait error\n");
-        return;
-    }
-    printf("status: %d\n", status);
 
 
 }
+
+void free_arg(char **pString) {
+    int i = 0;
+    while(pString[i] != NULL){
+        printf("Time to free arg[%d] = %s\n", i, pString[i]);
+        free(pString[i]);
+        i++;
+    }
+    //free(pString);
+
+}
+
+
+
 
 char **split_str(char *str, char **result) {
     char * pch;
@@ -124,10 +138,7 @@ char **split_str(char *str, char **result) {
         }
         tmp++;
     }
-
     count += last_comma < (str + strlen(str) - 1); //increase count if the last el wasn't delim
-    printf("COUNT %d\n", count);
-
     result = (char **)malloc((count+1)*sizeof(char*));
     if(result == NULL){
         fprintf(stderr,"malloc error\n");
@@ -146,17 +157,43 @@ char **split_str(char *str, char **result) {
     }
     while (pch != NULL && i<count)
     {
-        printf("pch = %s\n", pch);
-        pch = strtok (NULL, " ,");
+        pch = strtok (NULL, " ,\n");
         result[i] = malloc(sizeof(char)*strlen(pch));
         strcpy(result[i], pch);
         i++;
     }
     result[count] = NULL;
-    for(i=0; i<count; i++){
-        printf("result[%d] = %s\n",i, result[i]);
-    }
 
     return result;
+}
+
+void print_env() {
+    for (char **env = environ; *env; ++env)
+        printf("%s\n", *env);
+}
+
+void handle_programs(char **arg, char *buffer) {
+    if ((pid = fork()) < 0) {
+        fprintf(stderr, "fork error\n");
+        return;
+    }
+    else if(pid == 0){
+
+        if (execvp(arg[0], arg) < 0) {
+            fprintf(stderr, "execle error\n");
+            EXIT_FAILURE;
+        }
+        exit(0);
+    }
+    if(wait(&status) != pid){
+        fprintf(stderr, "wait error\n");
+        EXIT_FAILURE;
+    }
+    printf("status: %d\n", status);
+    if(status != 0){
+        fprintf(stderr, "Error ocured while excuting command: %s\n", buffer);
+        exit(1);
+    }
+
 }
 
