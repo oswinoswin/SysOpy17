@@ -1,10 +1,13 @@
-CFLAGS=-g -Wall -std=c99
+CFLAGS=-g -Wall -std=gnu99
 CC=gcc
 
-all: program
+all: program test_prog
 
 program: program.o
 	$(CC) $(CFLAGS) program.c -o program
+
+test_prog: test_prog.o
+	$(CC) $(CFLAGS) test_prog.c -o test_prog
 
 clean:
 	rm program *.o  datafile*
