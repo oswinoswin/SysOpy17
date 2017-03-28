@@ -10,7 +10,7 @@ test_prog: test_prog.o
 	$(CC) $(CFLAGS) test_prog.c -o test_prog
 
 clean:
-	rm program *.o  datafile*
+	rm program *.o  datafile* test_prog
 
 run:
 	./program input.txt
