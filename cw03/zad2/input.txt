@@ -1,0 +1,2 @@
+./t.sh a
+./test_prog test_prog

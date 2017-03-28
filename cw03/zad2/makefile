@@ -9,8 +9,11 @@ program: program.o
 test_prog: test_prog.o
 	$(CC) $(CFLAGS) test_prog.c -o test_prog
 
+set_cpu: set_cpu.o
+		$(CC) $(CFLAGS) set_cpu.c -o set_cpu
+
 clean:
 	rm program *.o  test_prog
 
 run:
-	./program input.txt 2 5
+	./program input.txt 100 100

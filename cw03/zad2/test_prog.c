@@ -1,15 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <signal.h>
+
+void sig_handler(int sig){
+    printf("%s\n","whatever");
+    signal(sig, sig_handler);
+}
 
 
 int main (int argc, char *args[]) {
 
-    printf("Hello from test_prog\n");
-    for( int i=0; i<100000; i++){
-        printf("still alive %d\n", i);
-    }
+    signal(SIGXCPU, sig_handler);
+    while(1);
 
     return 0;
 }
-
-

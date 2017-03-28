@@ -12,6 +12,11 @@
 #include <sys/wait.h>
 #include <memory.h>
 
+#include <sys/resource.h>
+#include <sys/time.h>
+#include <unistd.h>
+#include<stdio.h>
+
 
 #define ARGS_NO 30
 pid_t pid;
@@ -61,9 +66,7 @@ int main (int argc, char *args[]) {
     filename = args[1];
     tl = atoi(args[2]);
     ml = atoi(args[3]);
-
-
-
+    ml = ml*1024*1024; //convert to MB
 
     buffer = malloc(sizeof(char) * buf_size);
 
@@ -219,15 +222,15 @@ void print_limits(){
     }
 }
 
-void set_cpu_limits(int curr, int max){
-    limit.rlim_cur = curr;
+/*void set_cpu_limits(int curr, int max){
+    limit.rlim_cur =  curr;
     limit.rlim_max = max;
     if(setrlimit(RLIMIT_CPU, &limit) != 0){
         fprintf(stderr, "setrlimit error\n");
         EXIT_FAILURE;
     }
 }
-
+*/
 void set_mem_limits(int curr, int max){
     limit.rlim_cur = curr;
     limit.rlim_max = max;
@@ -240,10 +243,7 @@ void set_mem_limits(int curr, int max){
 void handle_programs(char **arg, char *buffer) {
 
 
-    print_limits();
-
-
-
+    //print_limits();
     startTime();
 
     if ((pid = fork()) < 0) {
@@ -251,10 +251,17 @@ void handle_programs(char **arg, char *buffer) {
         return;
     }
     else if(pid == 0){
-        set_cpu_limits(tl, tl);
-        set_mem_limits(ml, ml);
-        print_limits();
 
+        struct rlimit mem;
+        mem.rlim_cur = ml;
+        mem.rlim_max = ml;
+        setrlimit(RLIMIT_AS, &mem);
+
+        struct rlimit rl;
+        rl.rlim_cur = tl;
+        rl.rlim_max = tl;
+        setrlimit(RLIMIT_CPU, &rl);
+        printf("\n Default value now is : %lld\n", (long long int)rl.rlim_cur);
         if (execvp(arg[0], arg) < 0) {
             fprintf(stderr, "execle error\n");
             EXIT_FAILURE;
@@ -268,9 +275,12 @@ void handle_programs(char **arg, char *buffer) {
     printf("status: %d\n", status);
     if(status != 0){
         fprintf(stderr, "Error ocured while excuting command: %s\n", buffer);
+        stopTimeAndPrint();
         exit(1);
     }
     stopTimeAndPrint();
+
+
 
 }
 
