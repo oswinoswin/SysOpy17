@@ -15,13 +15,14 @@ int perm;
 
 static void hdl (int sig, siginfo_t *siginfo, void *context)
 {
-    children[asked] = siginfo->si_pid;
-    asked++;
-    printf ("Sending PID: %ld, UID: %ld, asked: %d\n",
+
+    printf ("PARENT received Sending PID: %ld, UID: %ld, asked: %d\n",
             (long)siginfo->si_pid, (long)siginfo->si_uid, asked);
 
+    //kill(siginfo->si_pid, SIGUSR2);
+   // printf("parent sendt response\n");
 
-    if(asked == K){
+    /*if(asked == K){
         printf("We got this\n");
         for(int i=0; i<asked; i++){
             kill(children[i], SIGALRM);
@@ -29,8 +30,13 @@ static void hdl (int sig, siginfo_t *siginfo, void *context)
     }
     if(asked > K){
         kill(siginfo->si_pid, SIGALRM);
-    }
+    }*/
+}
 
+static void hdl2(int sig, siginfo_t *siginfo, void *context)
+{
+    printf ("Parent received goodbye from child: Sending PID: %ld, UID: %ld, asked: %d\n",
+            (long)siginfo->si_pid, (long)siginfo->si_uid, asked);
 }
 
 void child_stopped(int sig){
@@ -38,7 +44,63 @@ void child_stopped(int sig){
     perm = 1;
 }
 
+int main(void)
+{
+    pid_t child_pid, wpid;
+    int status = 0;
+    int i;
+    int a[3] = {1, 2, 1};
 
+    struct sigaction act;
+    memset(&act, '\0', sizeof(act));
+    //Use the sa_sigaction field because the handles has two additional parameters
+    act.sa_sigaction = &hdl;
+    //The SA_SIGINFO flag tells sigaction() to use the sa_sigaction field, not sa_handler.
+    act.sa_flags = SA_SIGINFO;
+    if (sigaction(SIGUSR1, &act, NULL) < 0) {
+        perror ("sigaction");
+        return 1;
+    }
+
+    printf("parent_pid = %d\n", getpid());
+    for (i = 0; i < 3; i++)
+    {
+        printf("i = %d\n", i);
+        if ((child_pid = fork()) == 0)
+        {
+            printf("In child process (pid = %d)\n", getpid());
+            if (a[i] < 2)
+            {
+                sleep(3);
+                kill(getppid(), SIGUSR1);
+                printf("Should be accept\n");
+
+                exit(1);
+
+            }
+            else
+            {
+                printf("Should be reject\n");
+                exit(0);
+            }
+            /*NOTREACHED*/
+        }
+    }
+
+
+
+
+    while ((wpid = wait(&status)) > 0)
+    {
+        printf("Exit status of %d was %d (%s)\n", (int)wpid, status,
+               (status > 0) ? "accept" : "reject");
+        //sleep(2);
+    }
+
+    return 0;
+}
+
+/*
 int main(int argc, char *args[]) {
     int N;
 
@@ -60,17 +122,22 @@ int main(int argc, char *args[]) {
     }
 
     struct sigaction act;
-
     memset(&act, '\0', sizeof(act));
-
-    /* Use the sa_sigaction field because the handles has two additional parameters */
+    //Use the sa_sigaction field because the handles has two additional parameters
     act.sa_sigaction = &hdl;
-
-    /* The SA_SIGINFO flag tells sigaction() to use the sa_sigaction field, not sa_handler. */
+    //The SA_SIGINFO flag tells sigaction() to use the sa_sigaction field, not sa_handler.
     act.sa_flags = SA_SIGINFO;
-
     if (sigaction(SIGUSR1, &act, NULL) < 0) {
         perror ("sigaction");
+        return 1;
+    }
+
+    struct sigaction act2;
+    memset(&act2, '\0', sizeof(act2));
+    act2.sa_sigaction = &hdl2;
+    act2.sa_flags = SA_SIGINFO;
+    if (sigaction(SIGRTMIN, &act2, NULL) < 0) {
+        perror ("sigaction2");
         return 1;
     }
 
@@ -83,36 +150,34 @@ int main(int argc, char *args[]) {
             exit(EXIT_FAILURE);
         }
         if(pid ==  0){
-            perm = 0;
-            printf("Hello from child! %d \n",i);
-            sleep(3);
+
+            printf("Hello from child! %d  pid: %d\n",i, getpid());
             kill(getppid(), SIGUSR1);
-            printf("Child no %d sent signal\n", i);
-            //signal(SIGUSR2, child_stopped);
-            pause();
-            printf("Childno %d finished\n", i);
+            printf("ooo macarena\n");
+            //sleep(1);
+            printf("Child no %d finished\n", getpid());
             exit(0);
         }
         else{
             //children[i] = pid;
         }
 
-
     }
+    printf("LOOP ENDED\n");
 
 
-    while (asked < N) {
-
-        printf("Alive. K: %d, asked: %d\n", K, asked);
+    while(1){
         sleep(3);
+        printf("asked: %d\n", asked);
+        //wait(&status);
     }
 
+  
     if(pid != 0){
-        for(int i = 0; i<N; i++){
-            wait(&status);
-            printf("Status: %d\n", status);
+        for(int i = 0; i<asked; i++){
+
         }
     }
 
     return 0;
-}
+}*/
