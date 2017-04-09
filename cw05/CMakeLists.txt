@@ -6,5 +6,5 @@ set(-g)
 
 set(SOURCE_FILES zad1/interpreter.c zad2/mandelbrot.c)
 add_executable(interpreter zad1/interpreter.c)
-add_executable(mandelbrot zad2/mandelbrot.c)
+add_executable(master zad2/master.c)
 add_executable(whatever zad1/interpreter2.c)

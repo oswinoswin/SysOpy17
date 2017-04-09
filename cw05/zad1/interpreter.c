@@ -1,4 +1,5 @@
 #include <unistd.h>
+#include <memory.h>
 
 struct command
 {
@@ -66,10 +67,13 @@ int fork_pipes (int n, struct command *cmd)
 int
 main ()
 {
-    const char *ls[] = { "ls", 0 };
+    char *ps = "ps";
+
+    const char *ls[] = { ps, 0 };
     const char *awk[] = { "awk", "{print $1}", 0 };
     const char *sort[] = { "sort", 0 };
     const char *uniq[] = { "uniq", 0 };
+    memcpy(ls[0], "ls", sizeof(char)*2);
 
     struct command cmd [] = { {ls}, {awk}, {sort}, {uniq} };
 
