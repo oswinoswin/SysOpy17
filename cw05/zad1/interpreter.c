@@ -4,72 +4,131 @@
 #include <sys/wait.h>
 #include <memory.h>
 
-char **split_str(char *str, int *num);
+#define BUFFER_LEN	256
+
+typedef struct COMMAND{
+    struct COMMAND *next;
+    char arguments[BUFFER_LEN][BUFFER_LEN];
+} COMMAND;
+
+char **split_str(char *str);
 
 char **split_str_by_pipe(char *str, int *num);
 
+
 int main(int argc, char **argv)
 {
+
     int pipefd[2];
     int pid;
     char **to_execute;
-    char **args_child;
-    char **args_parent;
+    char **args1;
+    char **args2;
+    char ** args3;
     int count;
     int status;
 
-    char start[] = "ls -l | head -3\0";
+    COMMAND command;
+    char start[] = "ls -l | head -6 | tail -5 | tail -1\0";
     to_execute = split_str_by_pipe(start, &count);
+    //printf("count = %d\n", count);
+
+    char **argsy[count];
+    for(int i = 0; i<count; i++){
+        argsy[i] = split_str(to_execute[i]);
+        //printf("argsy[%d] %s\n", i, argsy[i][0]);
+    }
+
+
+/*
     char *str1 = to_execute[0];
-    char *str2 = to_execute[1];
+    char *str2 = to_execute[1];*/
 
 
-    args_child = split_str(str1, &count);
-    args_parent = split_str(str2, &count);
+   /* args1 = split_str(str1);
+    args2 = split_str(str2);
+    args3 = split_str(to_execute[2]);*/
 
-    pipe(pipefd);
 
-    pid = fork();
-    if (pid == 0)
-    {
-        close(pipefd[0]);
 
-        if(dup2(pipefd[1], STDOUT_FILENO)<0){
-            fprintf(stderr, "dup2\n");
-            EXIT_FAILURE;
+    int i = 0;
+    int numPipes = count - 1;
+
+
+
+    int pipefds[2*numPipes];
+
+    for(i = 0; i < 2*(numPipes); i++){
+        if(pipe(pipefds + i*2) < 0) {
+            perror("pipe");
+            exit(EXIT_FAILURE);
         }
+    }
 
-        if(execvp(args_child[0], args_child)<0){
-            fprintf(stderr,"execvp error\n");
-            EXIT_FAILURE;
+    for(int j = 0; j<count; j++){
+        //printf("j = %d\n",j);
+        //printf("Should execute %s\n", argsy[j][0]);
+        pid = fork();
+        if (pid == 0) {
+            sleep(1);
+
+            //if not first command
+            if (j != 0) {
+                //printf("j!=0\n");
+               if (dup2(pipefds[(j - 1) * 2], 0) < 0) {
+                    perror(" dup2");///j-2 0 j+1 1
+                    exit(EXIT_FAILURE);
+
+                }
+                //printf("j = %d  dup(pipefd[%d], 0])\n",j, (j-1)*2);
+            }
+            //if not last command
+            //printf("j = %d, count-1 =%d\n", j, count-1);
+
+            if(j < count - 1) {
+                printf("j<count -1\n");
+                if(dup2(pipefds[j * 2 + 1], 1) < 0) {
+                    perror("dup2");
+                    exit(EXIT_FAILURE);
+                }
+                printf("j = %d dup(pipefd[%d], 1])\n", j,2*j+1);
+            } else{
+                printf("Now we should get result\n");
+            }
+
+            for (i = 0; i < 2 * numPipes; i++) {
+                close(pipefds[i]);
+            }
+
+           // printf("j = %d %s\n",j, argsy[j][0]);
+            fprintf(stderr, "j = %d %s\n",j, argsy[j][0]);
+            if (execvp(argsy[j][0], argsy[j]) < 0) {
+                perror(argsy[j][0]);
+                exit(EXIT_FAILURE);
+            }
+
+
         }
+        else if(pid < 0) {
+                perror("error");
+                exit(EXIT_FAILURE);
+            }
+
 
     }
-    else
-    {
-        close(pipefd[1]);
-
-        if(dup2(pipefd[0], STDIN_FILENO)<0){
-            fprintf(stderr, "dup2\n");
-            EXIT_FAILURE;
-        }
-
-        if(execvp(args_parent[0], args_parent)<0){
-            fprintf(stderr,"execvp error\n");
-            EXIT_FAILURE;
-        }
-
-        close(pipefd[0]);
-
-        waitpid(pid, NULL, 0);
-
+    for(i = 0; i < 2 * numPipes; i++){
+       close(pipefds[i]);
+        //puts("closed pipe in parent");
     }
+    while(waitpid(0,0,0) <= 0);
+
+
 
     return 0;
 }
 
 
-char **split_str(char *str, int *num) {
+char **split_str(char *str) {
     char * pch;
 
     int count = 0;
@@ -123,7 +182,6 @@ char **split_str(char *str, int *num) {
     }while (pch != NULL && i<count);
 
     result[count] = NULL;
-    *num = count;
     return result;
 }
 
@@ -172,4 +230,3 @@ char **split_str_by_pipe(char *str, int *num) {
     *num = count;
     return result;
 }
-
