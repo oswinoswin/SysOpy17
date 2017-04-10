@@ -1,5 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/stat.h>
+#include <values.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <time.h>
+#include <memory.h>
+
+#define MAX_BUF 20
+char *fifoName;
+int fifoHandle = -1;
+void cleanFifo(void);
 
 int main(int argc, char **argv){
 
@@ -8,83 +19,89 @@ int main(int argc, char **argv){
         EXIT_FAILURE;
     }
 
-    char *filename = argv[1];
+    char *fifoName = argv[1];
     int R = atoi(argv[2]);*/
-    int R = 10;
+    int R = 800;
     int T[R][R];
-    char *output = "data";
+    char *data = "masterdata.dat";
+
+    fifoName = "abc";
+
     FILE *fileDesc;
-    char *buffer;
+    FILE *gnuDesc;
 
-    for(int i = 0; i<R; i++) {
-        for (int j = 0; j < R; j++) {
-            T[i][j] = 256;//0;
+
+    int i,j, iter;
+
+    for(i = 0; i<R; i++) {
+        for (j = 0; j < R; j++) {
+            T[i][j] = 0;//0;
         }
     }
 
-    //open file to write
-    fileDesc = fopen(output, "w");
-    if(fileDesc == NULL) {
-        fprintf(stderr, "fopen error\n");
-        exit(EXIT_FAILURE);
+
+    int fd;
+    char * myfifo = "abc";
+    char buf[MAX_BUF];
+    char *a, *b, *c;
+    char *pch;
+
+    /* create the FIFO (named pipe) */
+    mkfifo(myfifo, 0666);
+
+
+    sleep(10);
+
+    /* open, read, and display the message from the FIFO */
+    fd = open(myfifo, O_RDONLY);
+
+    while(read(fd, buf, MAX_BUF)>0){
+        //printf("Received: %s\n", buf);
+        pch = strtok(buf, " ");
+        a = pch;
+        pch = strtok(NULL, " ");
+        b = pch;
+        pch = strtok(NULL, " ");
+        c = pch;
+        i =atoi(a);
+        j = atoi(b);
+        iter = atoi(c);
+        T[j][i] = iter;
+        //printf("writes: %d %d %d pch = %s\n", i, j, iter, pch);
     }
 
-    int recordSize = 7;
-
-    buffer = malloc(sizeof(char) * recordSize);
 
 
-    //start writting
-    if (fseek(fileDesc, 0, SEEK_SET) == -1) {
-        fprintf(stderr, "fseek error\n");
-        exit(EXIT_FAILURE);
-    }
 
-    buffer[1] = ' ';
-    buffer[4] = ' ';
-    buffer[6] = '\n';
-    printf("buffer= %s\n", buffer);
+    close(fd);
 
-    if (fwrite(buffer, sizeof(char), recordSize, fileDesc) != recordSize) {
-        fprintf(stderr, "fwrite error");
-        exit(EXIT_FAILURE);
-    }
-
-    for(int i = 0; i<R; i++){
-        for(int j = 0; j<R; j++){
-            buffer[0] = i + '0';
-            buffer[3] = j + '0';
-            int tmp = i + j  + '0';
-            printf("T[%d][%d]= %c\t",i,j, (char)tmp + '0');
-            buffer[5] = tmp + '0';
-
-            if (fwrite(buffer, sizeof(char), recordSize, fileDesc) != recordSize) {
-                fprintf(stderr, "fwrite error");
-                exit(EXIT_FAILURE);
-            }
+    /* remove the FIFO */
+    unlink(myfifo);
 
 
+    //write to file
+    fileDesc = fopen(data,"w");
+    for(i = 0; i<R; i++){
+        for(j = 0; j<R; j++){
+            fprintf(fileDesc,"%d %d %d\n",j, i,T[i][j]);
+            //printf("%d %d %d\n", j, i, T[i][j]);
         }
-
-        //buffer[0] = '\n';
-
-        if (fwrite(buffer, sizeof(char), 1, fileDesc) != 1) { //write endl
-            fprintf(stderr, "fwrite error");
-            exit(EXIT_FAILURE);
-        }
-
-
+        fprintf(fileDesc,"\n");
     }
-
-    //popen("gnuplot",)
-
-    //getc(stdin);
-
 
 
     fclose(fileDesc);
 
+    gnuDesc = popen("gnuplot","w");
+    fprintf(gnuDesc, "set view map\n");
+    fprintf(gnuDesc, "set xrange[0:%d]\n", R);
+    fprintf(gnuDesc, "set yrange[0:%d]\n", R);
+    fprintf(gnuDesc, "plot '%s' with image\n", data);
+
+    fflush(gnuDesc);
+    getc(stdin);
+    fclose(gnuDesc);
+
 
     return 0;
 }
-
