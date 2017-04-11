@@ -1,3 +1,4 @@
+#define _BSD_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
@@ -14,18 +15,17 @@ void cleanFifo(void);
 
 int main(int argc, char **argv){
 
-    /*if(argc != 3){
+    if(argc != 3){
         fprintf(stderr, "Usage [filename][R]\n");
         EXIT_FAILURE;
     }
 
-    char *fifoName = argv[1];
-    int R = atoi(argv[2]);*/
-    int R = 800;
+    char *myfifo = argv[1];
+    int R = atoi(argv[2]);
+    //int R = 800;
     int T[R][R];
-    char *data = "masterdata.dat";
+    char *data = "data";
 
-    fifoName = "abc";
 
     FILE *fileDesc;
     FILE *gnuDesc;
@@ -41,7 +41,6 @@ int main(int argc, char **argv){
 
 
     int fd;
-    char * myfifo = "abc";
     char buf[MAX_BUF];
     char *a, *b, *c;
     char *pch;

@@ -1,0 +1,1 @@
+/usr/bin/cc  -std=c99    CMakeFiles/master.dir/zad2/master.c.o  -o master -rdynamic 

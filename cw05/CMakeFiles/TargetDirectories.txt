@@ -1,0 +1,3 @@
+/home/student/SysOpy17/cw05/CMakeFiles/interpreter.dir
+/home/student/SysOpy17/cw05/CMakeFiles/master.dir
+/home/student/SysOpy17/cw05/CMakeFiles/slave.dir

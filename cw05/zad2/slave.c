@@ -8,6 +8,7 @@
 #include <time.h>
 
 #define MAX_BUF 20
+/*Mandelbrot code is taken from rhosettacode.org*/
 
 int main(int argc, char *argv[])
 {
@@ -48,7 +49,7 @@ int main(int argc, char *argv[])
     double Zx2, Zy2; /* Zx2=Zx*Zx;  Zy2=Zy*Zy  */
 
     int Iteration;
-    const int IterationMax=200;
+    const int IterationMax=K;
     /* bail-out value , radius of circle ;  */
     const double EscapeRadius=2;
     double ER2=EscapeRadius*EscapeRadius;

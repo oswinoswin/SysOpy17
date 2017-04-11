@@ -1,0 +1,5 @@
+/home/student/SysOpy17/cw05/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/student/SysOpy17/cw05/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/student/SysOpy17/cw05/cmake-build-debug/CMakeFiles/slave.dir
+/home/student/SysOpy17/cw05/cmake-build-debug/CMakeFiles/master.dir
+/home/student/SysOpy17/cw05/cmake-build-debug/CMakeFiles/interpreter.dir

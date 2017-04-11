@@ -1,0 +1,1 @@
+/usr/bin/cc  -g   CMakeFiles/mandelbrot.dir/zad2/mandelbrot.c.o  -o mandelbrot -rdynamic 

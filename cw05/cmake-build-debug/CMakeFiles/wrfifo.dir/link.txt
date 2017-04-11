@@ -1,0 +1,1 @@
+/usr/bin/cc  -g   CMakeFiles/wrfifo.dir/zad2/wrfifo.c.o  -o wrfifo -rdynamic 

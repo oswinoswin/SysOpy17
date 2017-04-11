@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/student/SysOpy17/cw05/zad2/reader.c
+fcntl.h
+-
+stdio.h
+-
+sys/stat.h
+-
+unistd.h
+-
+

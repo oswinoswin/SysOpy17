@@ -1,0 +1,1 @@
+/usr/bin/cc  -std=c99 -g   CMakeFiles/whatever.dir/zad1/interpreter2.c.o  -o whatever -rdynamic 

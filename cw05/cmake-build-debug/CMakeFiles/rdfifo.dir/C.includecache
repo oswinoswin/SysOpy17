@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/student/SysOpy17/cw05/zad2/rdfifo.c
+stdlib.h
+-
+sys/stat.h
+-
+sys/types.h
+-
+limits.h
+-
+stdio.h
+-
+fcntl.h
+-
+unistd.h
+-
+limits.h
+-
+time.h
+-
+

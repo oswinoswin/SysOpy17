@@ -1,0 +1,1 @@
+/usr/bin/cc  -g   CMakeFiles/writer.dir/zad2/writer.c.o  -o writer -rdynamic 
