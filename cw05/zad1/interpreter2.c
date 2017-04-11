@@ -3,11 +3,13 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
-/*write better parsing function*/
+
 
 #define MAX_ARGS 10
-#define COMMANDS_NO 20;
-//size_t  *restrict MAX_LINE=200;
+#define MAX_COMMANDS 20
+#define MAX_COMMAND 100
+#define LINE_LENGTH 500
+
 
 char **split_str(char *str);
 
@@ -105,94 +107,116 @@ int fork_pipes(int n, char ***line)
     return 0;
 }
 
-int handle_one(char ***line){
-    printf("handle one\n");
-
-    pid_t pid;
-    pid = fork();
-
-    if (pid == 0)
-    {
-        //printf("Executing: %s",line[0][0]);
-        //const char *tmp = (const char*) malloc(sizeof(char)* MAX_ARGS);
-        //strcpy(tmp, line[0][0]);
-        //char * const testowy[] = {line[0][0], NULL};
-        //printf("testowy[0] = %s\n", testowy[0]);
-        //execvp(testowy[0], (char * const*) testowy);
-
-        char *testowy[] = {"ls", NULL};
-        strcpy(testowy[0], line[0][0]);
-        execvp((const char*)testowy[0],(char * const *) testowy);
-    } else{
-        waitpid(pid, 0, 0);
-    }
-
-
-    return 0;
-}
 
 
 int main (int argc, char **argv)
 {
 
-   /* char input[] = "ls -l | tail -5 | uniq | awk {print$1} | head -1\0";
-    handle_input(input);
-
-    strcpy(input, "echo Ala");
-    handle_input(input);*/
-    size_t max_line = 20;
-
 
     char *input;
-
-    input = (char *)malloc(200*sizeof(char));
-
-    int char_no;
+    size_t max_line = LINE_LENGTH;
+    input = (char *)malloc(max_line*sizeof(char));
 
 
-    char *testowy[] = {"ls", NULL};
-    //execvp(testowy[0], testowy);
-    char ***line = (char***)malloc(sizeof(char**)*MAX_ARGS);
-    line[0] = testowy;
+    char *tmp[MAX_COMMANDS] ;
+    char **pom[MAX_ARGS];
+    int commands_count = 0;
+    int args_count = 0;
+    //split with |
+    char *tmp2 = (char*)malloc(sizeof(char)*MAX_COMMANDS);
 
-    fork_pipes(1,line);
+    char example[] = "ls -l | tail -1";
+
+    char * spp; //split by "|"
+    char *sps; //split by " "
+
+    spp = strtok(example, "|");
+    if(spp == NULL){
+        fprintf(stderr, "split string error\n");
+        EXIT_FAILURE;
+    }
+    tmp[commands_count] = spp;
+
+    commands_count++;
+    while((spp = strtok(NULL, "|")) != NULL){
+        tmp[commands_count] = spp;
+        //printf("tmp:%s\n", tmp[commands_count]);
+
+        commands_count++;
+
+    }
+
+    for(int i = 0 ; i < commands_count; i++){
+        printf("tmp:%s\n", tmp[i]);
+        args_count = 0;
+        //tmp2 = tmp[i];
+        strcpy(tmp2, tmp[i]);
+        printf("tmp:%s\n", tmp[i]);
+        sps = strtok(tmp2, " ");
+        printf("tmp:%s\n", tmp[i]);
+        if(sps == NULL){
+            fprintf(stderr, "split string error\n");
+            EXIT_FAILURE;
+        }
+        pom[i][args_count] = sps;
+        printf("pom[%d][%d] = %s\n",i, args_count, pom[i][args_count]);
+
+        args_count++;
+        while((sps = strtok(NULL, " ")) != NULL){
+            pom[i][args_count] = sps;
+            args_count++;
+        }
+        pom[i][args_count] = NULL;
+        execvp(pom[0][0], pom[0]);
+
+    }
+
+    return 0;
 
 
-    while((char_no = getline(&input, &max_line,stdin)) > 1){
+
+
+    sps = strtok(tmp, " ");
+    if(sps == NULL){
+        fprintf(stderr, "split string error\n");
+        EXIT_FAILURE;
+    }
+
+    pom[args_count] = sps;
+    args_count++;
+    printf("first: %s\n", sps);
+    while((sps = strtok(NULL, " ")) != NULL){
+        pom[args_count] = sps;
+        printf("spl:%s\n",pom[args_count]);
+        args_count++;
+
+    }
+    pom[args_count] = NULL;
+    printf("%d\n", args_count);
+//    line[0] = pom;
+ //   fork_pipes(1, line);
+
+
+
+    /*while((char_no = getline(&input, &max_line,stdin)) > 1){
 
         handle_input(input);
         printf("There was %d chars read\n", char_no);
+        int num = 0;
+        char ** zenon = split_str_by_pipe(input, &num);
+        for(int i = 0; i<num; i++){
+            printf("zenon: %s\n", zenon[i]);
+        }
+
         printf("Write something...\n");
-    }
+    }*/
 
 
     free(input);
     return 0;
 }
 
-void handle_input(char *input){
-    int num;
-    char **splitted_by_pippe;
-    splitted_by_pippe = split_str_by_pipe(input, &num);
-    char **line[num];
-    for(int i = 0; i<num; i++){
-        line[i] = split_str(splitted_by_pippe[i]);
-    }
-    printf("num = %d\n", num);
 
-    if(num == 1 && line[0][1] == NULL){
-        handle_one(line);
-        return;
-    }
-
-    else{
-        fork_pipes(num, line);
-        return;
-
-    }
-
-
-}
 
 char **split_str(char *str) {
     char * pch;
