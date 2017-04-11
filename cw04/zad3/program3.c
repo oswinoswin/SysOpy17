@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
     int signalCount;
 
     if (argc != 3) {
-        fprintf(stderr, "usage: [number of signals] [type]");
+        fprintf(stderr, "usage: [number of signals] [type]\n");
         exit(EXIT_FAILURE);
     }
 
@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
     }
 
     /* Add SIGUSR1 and SIGUSR2 to blocked signals */
-    if (sigaddset(&sigset, SIGUSR1) || sigaddset(&sigset, SIGUSR2)) {
+    if (sigaddset(&sigset, SIGUSR1) || sigaddset(&sigset, SIGUSR2) || sigaddset(&sigset, SIGRTMIN) || sigaddset(&sigset, SIGRTMIN+1)) {
         perror("sigaddset error");
         exit(EXIT_FAILURE);
     }
